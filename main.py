@@ -27,15 +27,28 @@ def load_music():
 def pause_music():
     global is_pause
     if is_pause == False:
+        pygame.mixer.music.pause()
         is_pause = True
         button_pause.configure(text = 'Play')
     else:
+        pygame.mixer.music.unpause()
         is_pause = False
         button_pause.configure(text = 'Pause')
 def prev_music():
-    print('Previous')
+    global index_music
+    if index_music == 0:
+        pass
+    else:
+        index_music -= 1
+        load_music()
+    pygame.mixer.music.play()
 def next_music():
-    print('Next')
+    global index_music
+    index_music += 1
+    if index_music >= len(list_music):
+        index_music = 0
+    load_music()
+    pygame.mixer.music.play()
 
 button_prev = ctk.CTkButton(button_frame, text = '<<', width = 20, command = prev_music)
 button_prev.grid(row = 0, column = 0, padx = 10)
